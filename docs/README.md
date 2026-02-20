@@ -1,4 +1,4 @@
-# Duke
+# Super Bash Bros
 
 {Give product intro here}
 
