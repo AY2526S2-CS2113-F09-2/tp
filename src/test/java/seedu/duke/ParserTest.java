@@ -62,7 +62,39 @@ public class ParserTest {
         command.execute(list);
 
         Record record = list.getRecord(0);
-        assertEquals("Capo CLI", record.toString());
+        assertEquals("Capo CLI", record.getTitle());
+        assertEquals("P", record.getRecordType());
+    }
 
+    @Test
+    public void parse_validExperienceInput() {
+        Command command = Parser.parse(
+                "experience Google /role SWE Intern /tech JavaScript /from 2025-12 /to 2026-02"
+        );
+
+        assertInstanceOf(AddCommand.class, command);
+
+        RecordList list = new RecordList();
+        command.execute(list);
+
+        Record record = list.getRecord(0);
+        assertEquals("Google", record.getTitle());
+        assertEquals("E", record.getRecordType());
+    }
+
+    @Test
+    public void parse_validCcaInput() {
+        Command command = Parser.parse(
+                "cca Tennis /role Captain /tech nil /from 2025-01 /to 2026-01"
+        );
+
+        assertInstanceOf(AddCommand.class, command);
+
+        RecordList list = new RecordList();
+        command.execute(list);
+
+        Record record = list.getRecord(0);
+        assertEquals("Tennis", record.getTitle());
+        assertEquals("C", record.getRecordType());
     }
 }

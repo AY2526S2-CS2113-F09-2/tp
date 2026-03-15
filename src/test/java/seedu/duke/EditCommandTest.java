@@ -25,21 +25,21 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(0, "New description");
         editCommand.execute(recordList);
 
-        assertEquals("New description", record.toString());
+        assertEquals("New description", record.getTitle());
     }
 
     @Test
     public void execute_validIndexOnlyTargetRecordUpdated() {
         RecordList recordList = new RecordList();
         Record firstRecord = new Record(
-                "firstRecord",
+                "First record",
                 "Developer",
                 "Java",
                 YearMonth.parse("2026-01"),
                 YearMonth.parse("2026-03")
         );
         Record secondRecord = new Record(
-                "secondRecord",
+                "Second record",
                 "Developer",
                 "Java",
                 YearMonth.parse("2026-01"),
@@ -51,8 +51,8 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(1, "Updated second record");
         editCommand.execute(recordList);
 
-        assertEquals("First record", firstRecord.toString());
-        assertEquals("Updated second record", secondRecord.toString());
+        assertEquals("First record", firstRecord.getTitle());
+        assertEquals("Updated second record", secondRecord.getTitle());
     }
 
     @Test

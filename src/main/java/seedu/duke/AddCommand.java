@@ -14,7 +14,8 @@ public class AddCommand extends Command{
     public void execute(RecordList list) {
         list.add(r);
         ui.showLine();
-        System.out.println(r.toString() + " added");
+        System.out.println("[" + r.getRecordType() + "] "
+                + r.getTitle() + " added");
         ui.showLine();
     }
 }

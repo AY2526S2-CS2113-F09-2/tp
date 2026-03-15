@@ -13,7 +13,7 @@ public class RecordList implements Iterable<seedu.duke.RecordType.Record> {
         this.size = 0;
     }
 
-    public void add(seedu.duke.RecordType.Record record){
+    public void add(Record record){
         list.add(record);
         size++;
     }
