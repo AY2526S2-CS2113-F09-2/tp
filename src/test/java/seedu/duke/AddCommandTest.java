@@ -9,7 +9,7 @@ import seedu.duke.recordtype.Record;
 
 public class AddCommandTest {
     @Test
-    public void AddedToList(){
+    public void addedToList(){
         RecordList list = new RecordList();
         Record record = new Record(
                 "Resumake CLI",
