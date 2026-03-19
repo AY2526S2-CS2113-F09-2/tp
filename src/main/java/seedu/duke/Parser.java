@@ -47,18 +47,7 @@ public class Parser {
         case "cca":
             r = parseCca(split);
             return new AddCommand(r);
-
-=======
-    public static Command parse(String userInput) {
-        if (userInput == null || userInput.isBlank()) {
-            return null;
-        }
-        String[] split = userInput.trim().split("\\s+");
-        String keyword = split[0].toLowerCase();
-
-        switch (keyword) {
-        case "bye":
-            return new ExitCommand();
+            
         case "delete":
             if (split.length < 2) {
                 return null;
