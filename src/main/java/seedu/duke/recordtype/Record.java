@@ -47,7 +47,9 @@ public class Record {
         this.title = description;
     }
 
-    public String getRecordType() { return recordType; }
+    public String getRecordType() {
+        return recordType;
+    }
 
     @Override
     public String toString() {
