@@ -8,6 +8,11 @@
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
 
+Main components
+- Resumake: The main which launches the app.
+- UI: The interface which helps to display all messages in User interface.
+- Parser: Helps to parse user input and returns the correct command.
+- Storage: Helps us Store the data in a record txt.
 
 ## Product scope
 ### Target user profile
