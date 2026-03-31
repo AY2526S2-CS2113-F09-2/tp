@@ -305,10 +305,10 @@ public class Parser {
                 return null;
             }
 
-        case "sortrecords":
+        case "sort":
             return new SortCommand();
 
-        case "generate resume":
+        case "generate":
             return new GenerateCommand();
 
         default:
