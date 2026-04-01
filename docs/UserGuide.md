@@ -53,6 +53,88 @@ Resumake runs in the terminal and saves your data locally in `records.txt` so re
 
 ---
 
+### Adding a project : `project`
+
+Adds a new project record.
+
+Format:
+`project TITLE /role ROLE /tech TECH /from YYYY-MM /to YYYY-MM`
+
+Example:
+```text
+project Capo CLI /role Developer /tech Java /from 2026-01 /to 2026-03
+```
+
+Expected output:
+```text
+--------------------
+[P] Capo CLI added
+--------------------
+```
+
+---
+
+### Adding an experience : `experience`
+
+Adds a new experience record.
+
+Format:
+`experience TITLE /role ROLE /tech TECH /from YYYY-MM /to YYYY-MM`
+
+Example:
+```text
+experience Google /role SWE Intern /tech JavaScript /from 2025-12 /to 2026-02
+```
+
+Expected output:
+```text
+--------------------
+[E] Google added
+--------------------
+```
+
+---
+
+### Adding a CCA : `cca`
+
+Adds a new CCA record.
+
+Format:
+`cca TITLE /role ROLE /tech TECH /from YYYY-MM /to YYYY-MM`
+
+Example:
+```text
+cca NUS Hackers /role Core Member /tech Python /from 2025-01 /to 2026-01
+```
+
+Expected output:
+```text
+--------------------
+[C] NUS Hackers added
+--------------------
+```
+
+---
+### Adding a bullet : `addbullet`
+
+Adds a bullet to a record.
+
+Format:
+`addbullet RECORD_INDEX / BULLET_TEXT`
+
+Example:
+```text
+addbullet 1 / Implemented persistent storage with file IO
+```
+
+Expected output:
+```text
+--------------------
+Added bullet to: Capo CLI
+--------------------
+```
+---
+
 ### Finding records by keyword : `find`
 
 Finds records whose title, role, tech, start date, or end date contains the keyword.
