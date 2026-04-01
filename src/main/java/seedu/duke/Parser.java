@@ -239,7 +239,7 @@ public class Parser {
 
         case "findbullet":
             if (split.length < 2 || split[1].trim().isEmpty()) {
-                return null;
+                throw new ResumakeException("Please follow the correct format");
             }
             return new FindBulletCommand(split[1]);
 
