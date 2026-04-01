@@ -52,15 +52,17 @@ public class ParserTest {
     @Test
     public void parse_findWithoutKeyword_throwExceptions() throws ResumakeException {
         assertThrows(ResumakeException.class, () -> Parser.parse("find"));
-      
-    public void parse_findBulletInput_returnsFindBulletCommand() {
+    }
+
+    @Test
+    public void parse_findBulletInput_returnsFindBulletCommand() throws ResumakeException {
         Command command = Parser.parse("findbullet persistent");
         assertInstanceOf(FindBulletCommand.class, command);
         assertEquals("persistent", ((FindBulletCommand) command).getKeyword());
     }
 
     @Test
-    public void parse_findBulletWithoutKeyword_throwExceptions() throw ResumakeException{
+    public void parse_findBulletWithoutKeyword_throwExceptions() throws ResumakeException{
         assertThrows(ResumakeException.class, () -> Parser.parse("findbullet"));
     }
 
