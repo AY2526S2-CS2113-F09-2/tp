@@ -1,4 +1,4 @@
-package seedu.duke.recordtype;
+package seedu.duke;
 
 public class User {
     private String name;
