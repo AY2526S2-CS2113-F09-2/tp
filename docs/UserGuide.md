@@ -32,6 +32,7 @@ ResuMake runs in the terminal and saves your data locally in `records.txt` so re
 - [addbullet](#adding-a-bullet--addbullet)
 - [edit](#editing-a-record--edit)
 - [editbullet](#editing-a-bullet--editbullet)
+- [edituser](#editing-a-user--edituser)
 - [movebullet](#moving-a-bullet--movebullet)
 - [delete](#deleting-a-record--delete)
 - [deletebullet](#deleting-a-bullet--deletebullet)
@@ -204,6 +205,30 @@ Records saved to file
 ```
 ---
 
+### Editing a user: `editUser`
+
+Edits current user attribute which is displayed in resume.
+
+Format: `edituser ATTRIBUTE`
+
+Notes:
+- Can only be one of the three attributes, name, number or email.
+- Can only edit one attribute at a time.
+
+Example:
+```text
+edituser name
+```
+
+Expected Output:
+```text
+--------------------
+Current Name: CURRENT_NAME
+What would you like to change it too?
+--------------------
+```
+
+---
 ### Finding records by keyword : `find`
 
 Finds records whose title, role, tech, start date, or end date contains the keyword.
