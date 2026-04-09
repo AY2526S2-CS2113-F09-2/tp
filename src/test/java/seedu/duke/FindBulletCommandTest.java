@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.duke.commands.FindBulletCommand;
@@ -17,6 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FindBulletCommandTest {
     private final PrintStream originalOut = System.out;
+
+    @BeforeEach
+    public void setUp() {
+        User.loadFrom("John", 91234567, "john@example.com");
+    }
 
     @AfterEach
     public void restoreSystemStreams() {
@@ -92,5 +98,72 @@ public class FindBulletCommandTest {
     @Test
     public void constructor_blankKeyword_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> new FindBulletCommand("   "));
+    }
+
+    @Test
+    public void constructor_nullUi_usesDefaultUiAndStoresKeyword() {
+        FindBulletCommand command = new FindBulletCommand("java", null);
+        assertEquals("java", command.getKeyword());
+    }
+
+    @Test
+    public void execute_nullRecordList_printsErrorMessage() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        FindBulletCommand command = new FindBulletCommand("persistent");
+        command.execute(null);
+
+        String expected = "Error: RecordList cannot be null." + System.lineSeparator();
+        assertEquals(expected, outputStream.toString());
+    }
+
+    @Test
+    public void execute_nullRecordInList_throwsAssertionError() {
+        RecordList list = new RecordList();
+        list.add(null);
+
+        Record record = new Project(
+                "Capo CLI",
+                "Developer",
+                "Java",
+                YearMonth.parse("2026-01"),
+                YearMonth.parse("2026-03")
+        );
+        record.getBullets().add(null);
+        record.addBullet("Implemented persistent storage with file IO");
+        list.add(record);
+
+        FindBulletCommand command = new FindBulletCommand("persistent");
+        assertThrows(AssertionError.class, () -> command.execute(list));
+    }
+
+    @Test
+    public void execute_containsNullBullet_skipsNullBulletAndPrintsMatch() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        RecordList list = new RecordList();
+        Record record = new Project(
+                "Capo CLI",
+                "Developer",
+                "Java",
+                YearMonth.parse("2026-01"),
+                YearMonth.parse("2026-03")
+        );
+        record.getBullets().add(null);
+        record.addBullet("Implemented persistent storage with file IO");
+        list.add(record);
+
+        FindBulletCommand command = new FindBulletCommand("persistent");
+        command.execute(list);
+
+        String lineSeparator = System.lineSeparator();
+        String expectedOutput = "1. [P] Capo CLI | role: Developer | tech: Java | from: 2026-01 | to: 2026-03"
+                + lineSeparator
+                + "Bullets:" + lineSeparator
+                + "  1. Implemented persistent storage with file IO" + lineSeparator;
+
+        assertEquals(expectedOutput, outputStream.toString());
     }
 }

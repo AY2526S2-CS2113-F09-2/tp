@@ -1,2 +1,1 @@
-project Capo CLI /role Developer /tech Java /from 2026-01 /to 2026-03 /bullets Implement modular storage ;; Designed modular commands for extensibility
-experience Google /role “SWE Intern” /tech “JavaScript” /from 2025-12 /to 2026-02 /bullets modulAr also
+USER|john|12345678|123@gmail.com
