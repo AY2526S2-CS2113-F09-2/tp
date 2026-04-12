@@ -25,16 +25,16 @@ public class AddBulletCommand extends Command {
      * @param bullet Bullet point content (must not be null or blank)
      * @throws IllegalArgumentException if index is negative or bullet is null/blank
      */
-    public AddBulletCommand(int index, String bullet) {
+    public AddBulletCommand(int index, String bullet) throws ResumakeException {
         this(index, bullet, new Ui());
     }
 
-    public AddBulletCommand(int index, String bullet, Ui ui) {
-        if (index <= 0) {
-            throw new IllegalArgumentException("Record index must be non-negative.");
+    public AddBulletCommand(int index, String bullet, Ui ui) throws ResumakeException{
+        if (index < 0) {
+            throw new ResumakeException("Record index must be non-negative.");
         }
         if (bullet == null || bullet.trim().isEmpty()) {
-            throw new IllegalArgumentException("Bullet cannot be blank.");
+            throw new ResumakeException("Bullet cannot be blank.");
         }
 
         this.index = index;
