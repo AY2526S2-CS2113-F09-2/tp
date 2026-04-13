@@ -48,17 +48,3 @@ My main contributions focused on improving reliability in record/bullet mutation
 ### Review/mentoring contributions
 - Supported teammates during integration/debugging for command-flow issues (especially parser + storage related behavior).
 - Coordinated branch-sync and merge conflict handling for smoother team integration.
-
-### Contributions beyond the project team
-- No major beyond-team contributions are claimed in this PPP.
-
-## Optional: Contributions to the Developer Guide (extracts)
-- [Storage Format and Persistence](../DeveloperGuide.md#storage-format-and-persistence)
-- [Delete Feature](../DeveloperGuide.md#delete-feature)
-- [Add, Edit, and Duplicate-Protection Features](../DeveloperGuide.md#add-edit-and-duplicate-protection-features)
-- [Instructions for Manual Testing](../DeveloperGuide.md#instructions-for-manual-testing)
-
-## Optional: Contributions to the User Guide (extracts)
-- [Deleting a record: `delete`](../UserGuide.md#deleting-a-record--delete)
-- [Deleting a bullet: `deletebullet`](../UserGuide.md#deleting-a-bullet--deletebullet)
-- [Saving](../UserGuide.md#saving)
