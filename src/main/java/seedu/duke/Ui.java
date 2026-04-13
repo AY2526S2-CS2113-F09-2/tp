@@ -39,6 +39,13 @@ public class Ui {
     }
 
     /**
+     * Displays the command prompt.
+     */
+    public void showPrompt() {
+        System.out.print("> ");
+    }
+
+    /**
      * Displays the greeting message when the application starts.
      */
     public void greetings() {
