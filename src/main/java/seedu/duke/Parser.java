@@ -52,7 +52,7 @@ public class Parser {
         String[] editParts = trimmedArgs.split("\\s+", 2);
         if (editParts.length < 2) {
             logger.warning("Edit command failed: missing index or fields");
-            throw new ResumakeException("missing index or fields");
+            throw new ResumakeException("Invalid record index");
         }
 
         try {
@@ -205,7 +205,7 @@ public class Parser {
 
         } catch (NumberFormatException e) {
             logger.warning("Edit command failed: invalid record index");
-            throw new ResumakeException("invalid record index");
+            throw new ResumakeException("Invalid record index");
         } catch (IllegalArgumentException e) {
             logger.warning(() -> "Edit command failed: " + e.getMessage());
             throw new ResumakeException(e.getMessage());
