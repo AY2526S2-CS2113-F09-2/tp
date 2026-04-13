@@ -451,7 +451,7 @@ public class Parser {
 
         case "edituser":
             if (split.length < 2 || split[1].trim().isEmpty()) {
-                throw new ResumakeException("Please follow the correct format");
+                throw new ResumakeException("Please use the format: edituser FIELD");
             }
             String field = split[1].trim(); // "name", "number", or "email"
             return new EditUserCommand(field, effectiveUi);
