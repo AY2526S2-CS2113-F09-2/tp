@@ -97,6 +97,12 @@ public class Parser {
 
             String titlePart = fields.substring(0, firstFlagIndex).trim();
             if (!titlePart.isEmpty()) {
+                // Check if title is only forward slashes or other invalid patterns
+                if (titlePart.matches("^/+$")) {
+                    logger.warning("Edit command failed: title cannot be only forward slashes");
+                    throw new ResumakeException(
+                            "Error: Please use the following format \"edit RECORD_INDEX [NEW_TITLE] [/role NEW_ROLE] [/tech NEW_TECH] [/fromYYYY-MM] [/to YYYY-MM]\". Title provided is invalid.");
+                }
                 newTitle = titlePart;
             }
 
@@ -177,7 +183,8 @@ public class Parser {
             if (newTitle == null && newRole == null && newTech == null
                     && newFrom == null && newTo == null) {
                 logger.warning("Edit command failed: no valid fields found");
-                throw new ResumakeException("no valid fields found");
+                throw new ResumakeException(
+                        "Error: Please use the following format \"edit RECORD_INDEX [NEW_TITLE] [/role NEW_ROLE] [/tech NEW_TECH] [/fromYYYY-MM] [/to YYYY-MM]\". At least one field must be provided.");
             }
 
             YearMonth finalFrom = newFrom;
