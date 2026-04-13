@@ -119,13 +119,14 @@ ResuMake stores data in a flat text file (`records.txt`) with:
 
 - First line reserved for user profile: `USER|name|number|email`
 - Subsequent lines for records in command-like format, e.g.
-  `project Title /role Role /tech Tech /from 2026-01 /to 2026-03 /bullets bullet A ;; bullet B`
+  `project Title /role Role /tech Tech /from 2026-01 /to 2026-03 /bullets b64:QnVpbHQgcGFyc2Vy ;; b64:QWRkZWQgdGVzdHM=`
 
 Key behaviors:
 
 - `loadFromFile` creates the directory/file if missing.
 - Invalid record lines are skipped instead of crashing load.
 - User line parsing uses `split("\\|", 4)` to preserve the full email field if delimiters appear inside the email text.
+- Bullets are serialized with `b64:` Base64 encoding in saved output and decoded on load.
 - `saveToFile` serializes all in-memory data and compares against existing file content.
 - If content is unchanged, file write and save confirmation message are skipped.
 
@@ -162,6 +163,8 @@ Record creation commands (`project`, `experience`, `cca`) are parsed in `Parser`
 Important behavior:
 
 - `AddCommand` rejects duplicate records using `RecordList.contains(...)`.
+- After adding a record, `AddCommand` asks whether to capture bullets immediately (`y`/`n`);
+  if `y`, it reads bullets until `esc` is entered.
 - `edit` uses `EditCommand` for partial field updates (`title`, `role`, `tech`, `from`, `to`).
 - Date constraints are validated to prevent `to < from`.
 
@@ -169,6 +172,7 @@ Important behavior:
 
 Read-style commands are implemented as:
 
+- `help` via `HelpCommand` (prints command summary and formats),
 - `list` via `ListCommand` (supports `all`, `E`, `C`, `P` filtering),
 - `show` via `ShowCommand` (record + bullets),
 - `find` via `FindCommand` (record field keyword search),
@@ -188,6 +192,7 @@ These commands do not mutate `RecordList`; storage now compares serialized state
 ### User Profile and Exit Features
 
 - `edituser` is implemented by `EditUserCommand` and `User.editField(...)`, supporting `name`, `number`, and `email`.
+- `edituser` retries invalid input up to 4 attempts before exiting the command with an error.
 - `bye` is implemented by `ExitCommand`; `Resumake` terminates the loop when `isExit()` returns `true`.
 - User data lifecycle:
   - loaded from storage first line (`USER|...`) when available,
@@ -195,7 +200,7 @@ These commands do not mutate `RecordList`; storage now compares serialized state
 
 ## Sequence Diagrams
 
-This section provides full sequence coverage for runtime orchestration and every command family.
+This section provides sequence coverage for runtime orchestration and command execution flows.
 
 ### Startup and Load
 
@@ -214,6 +219,11 @@ Source: `docs/diagrams/CommandDispatchSequenceDiagram.puml`
 Source: `docs/diagrams/ReadOnlySaveSkipSequenceDiagram.puml`
 
 ![Read-only Save-skip Sequence Diagram](images/ReadOnlySaveSkipSequenceDiagram.png)
+
+### Help (`help`)
+
+`help` follows the generic command-dispatch flow and prints command formats through `HelpCommand`.
+No dedicated sequence diagram is provided for this lightweight, read-only command.
 
 ### Add Record (`project` / `experience` / `cca`)
 

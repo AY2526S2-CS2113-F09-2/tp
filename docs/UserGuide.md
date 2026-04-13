@@ -49,8 +49,8 @@ Assumed user skill level:
 3. Navigate to that folder in the terminal and run `java -jar ResuMake.jar`.
 4. On startup, ResuMake first prints `Welcome to ResuMake`, then prints `Loaded records from file.`.
 5. If user details are not loaded from file, it will prompt:
-   - `Hello, what is your name?`
-   - `Hello what is your number?`
+   - `Welcome! What is your name?`
+   - `Next, what is your number?`
    - `Finally, what is your email?`
 
 ---
@@ -87,7 +87,8 @@ Assumed user skill level:
 > - Date format is `yyyy-MM`.
 > - For `project`, `experience`, and `cca`, fields must appear in this order: `/role`, `/tech`, `/from`, `/to`.
 > - After adding a `project`, `experience`, or `cca`, ResuMake asks whether you want to add bullet points immediately.
-> - For `list TYPE`, valid values are uppercase `E`, `C`, `P`.
+> - For `list TYPE`, valid values are `E`, `C`, `P` (case-insensitive, e.g. `list e` works).
+> - Duplicate records and duplicate bullets are rejected.
 > - ResuMake auto-saves to `records.txt` after command execution.
 
 ---
@@ -113,7 +114,6 @@ list [TYPE] - List records; TYPE can be E, C, or P.
 find KEYWORD - Find records by keyword.
 ...
 --------------------
-Records saved to file.
 ```
 
 ---
@@ -150,6 +150,7 @@ Format:
 `project TITLE /role ROLE /tech TECH /from YYYY-MM /to YYYY-MM`
 
 After the project is added, ResuMake asks whether you want to add bullet points immediately.
+If an identical record already exists, the command is rejected as a duplicate.
 
 - Enter `y` to add bullets one by one.
 - Enter `esc` to stop adding bullets.
@@ -321,6 +322,10 @@ Adds a bullet to a record.
 Format:
 `addbullet RECORD_INDEX / BULLET_TEXT`
 
+Notes:
+- Bullet text cannot be blank.
+- Duplicate bullets within the same record are rejected.
+
 Example:
 ```text
 addbullet 1 / Implemented persistent storage with file IO
@@ -396,6 +401,7 @@ Format:
 `edituser FIELD`
 
 - `FIELD` must be `name`, `number`, or `email`.
+- You get up to 4 attempts to provide a valid new value before the command exits.
 
 Example:
 ```text
@@ -496,6 +502,7 @@ Records sorted alphabetically by title.
 ### Generating resume view : `generate`
 
 Displays a formatted resume view with user information and all records grouped by type (`Cca`, `Experience`, `Project`).
+It also shows a `Skills` section derived from saved record tech stacks.
 
 Format:
 `generate`
@@ -520,6 +527,9 @@ Cca
 Experience
 --------------------
 ...
+Skills
+--------------------
+java, python
 ```
 
 ---
@@ -550,8 +560,8 @@ bye
 **Q: Why do I get `Error: Please follow the correct format`?**
 **A:** The command format is invalid or incomplete. Check spelling, required parameters, and field order (for add record commands: `/role /tech /from /to`).
 
-**Q: Why is `list e` rejected?**
-**A:** `list TYPE` currently accepts uppercase type codes only: `E`, `C`, `P`.
+**Q: Can I use lowercase in `list TYPE` (for example, `list e`)?**
+**A:** Yes. `list TYPE` accepts `E`, `C`, and `P` in a case-insensitive way.
 
 **Q: I edited/deleted the wrong item. Can I undo it?**
 **A:** There is no undo command currently. Use `edit`/`editbullet` to manually fix, or restore from a backup of `records.txt`.
@@ -594,5 +604,5 @@ ResuMake saves records to:
 records.txt
 ```
 
-Records are loaded on startup and written after each executed command.
-Successful delete commands are persisted immediately to `records.txt`.
+Records are loaded on startup and save is attempted after each executed command.
+If serialized content is unchanged (for example, read-only commands), ResuMake skips file writes.
