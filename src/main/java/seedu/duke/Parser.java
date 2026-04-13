@@ -124,7 +124,7 @@ public class Parser {
                     logger.warning("Edit command failed: title cannot be only forward slashes");
                     throw new ResumakeException(
                             "Error: Please use the following format \"edit RECORD_INDEX [NEW_TITLE] "
-                                    + "[/role NEW_ROLE] [/tech NEW_TECH] [/fromYYYY-MM] [/to YYYY-MM]\". "
+                                    + "[/role NEW_ROLE] [/tech NEW_TECH] [/from YYYY-MM] [/to YYYY-MM]\". "
                                     + "Title provided is invalid.");
                 }
                 newTitle = titlePart;
@@ -209,7 +209,7 @@ public class Parser {
                 logger.warning("Edit command failed: no valid fields found");
                 throw new ResumakeException(
                         "Error: Please use the following format \"edit RECORD_INDEX [NEW_TITLE] "
-                                + "[/role NEW_ROLE] [/tech NEW_TECH] [/fromYYYY-MM] [/to YYYY-MM]\". "
+                                + "[/role NEW_ROLE] [/tech NEW_TECH] [/from YYYY-MM] [/to YYYY-MM]\". "
                                 + "At least one field must be provided.");
             }
 
