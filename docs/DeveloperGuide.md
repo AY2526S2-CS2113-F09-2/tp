@@ -34,7 +34,6 @@ At runtime, the flow is:
 
 The architecture centers around `Resumake`, which coordinates `Ui`, `Parser`, `Storage`, and `RecordList`.
 `Parser` maps input into `Command` objects, and `Storage` persists `RecordList` data.
-<div style="page-break-after: always;"></div>
 
 ### Record Hierarchy Class Diagram
 
@@ -42,7 +41,6 @@ The architecture centers around `Resumake`, which coordinates `Ui`, `Parser`, `S
 
 `Record` is the base abstraction for resume entries and is extended by `Project`, `Experience`, and `Cca`.
 Bullets are managed inside `Record`, while `RecordList` provides collection-level operations.
-<div style="page-break-after: always;"></div>
 
 ### Delete and Storage Class Diagram
 
@@ -53,7 +51,6 @@ This feature area includes:
 - `Parser` creating `DeleteCommand` for `delete` and `deletebullet`.
 - `DeleteCommand` mutating `RecordList` (record deletion) or `Record` (bullet deletion).
 - `Storage` handling persistence via `saveToFile` and `loadFromFile`.
-<div style="page-break-after: always;"></div>
 
 ### Command Hierarchy Class Diagram
 
@@ -61,7 +58,6 @@ This feature area includes:
 
 This diagram shows all concrete command classes that extend the `Command` base class.
 It summarizes the command-oriented architecture used by `Parser`.
-<div style="page-break-after: always;"></div>
 
 ### Bullet and Edit Feature Class Diagram
 
@@ -76,7 +72,6 @@ This diagram captures editing-related commands:
 - `DeleteCommand`
 
 It also shows how these commands interact with `RecordList`, `Record`, and `ResumakeException`.
-<div style="page-break-after: always;"></div>
 
 ### User and Exception Class Diagram
 
@@ -84,7 +79,6 @@ It also shows how these commands interact with `RecordList`, `Record`, and `Resu
 
 This diagram focuses on user profile and exception interactions across `User`,
 `EditUserCommand`, `GenerateCommand`, `Storage`, and `Resumake`.
-<div style="page-break-after: always;"></div>
 
 ### Diagram Sources
 
@@ -105,7 +99,6 @@ For complete class-level coverage across all classes in `src/main/java`, use:
 - `docs/diagrams/FullSystemClassDiagram.puml`
 
 ![Full System Class Diagram](images/FullSystemClassDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ## Implementation Details
 
@@ -237,28 +230,24 @@ This design keeps `User.editField()` stateless and reusable — it simply valida
 ## Sequence Diagrams
 
 This section provides sequence coverage for runtime orchestration and command execution flows.
-<div style="page-break-after: always;"></div>
 
 ### Startup and Load
 
 Source: `docs/diagrams/StartupLoadSequenceDiagram.puml`
 
 ![Startup and Load Sequence Diagram](images/StartupLoadSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Generic Command Dispatch
 
 Source: `docs/diagrams/CommandDispatchSequenceDiagram.puml`
 
 ![Command Dispatch Sequence Diagram](images/CommandDispatchSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Read-only Save Skip
 
 Source: `docs/diagrams/ReadOnlySaveSkipSequenceDiagram.puml`
 
 ![Read-only Save-skip Sequence Diagram](images/ReadOnlySaveSkipSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Help (`help`)
 
@@ -270,105 +259,90 @@ No dedicated sequence diagram is provided for this lightweight, read-only comman
 Source: `docs/diagrams/AddRecordSequenceDiagram.puml`
 
 ![Add Record Sequence Diagram](images/AddRecordSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Add Bullet (`addbullet`)
 
 Source: `docs/diagrams/AddBulletSequenceDiagram.puml`
 
 ![Add Bullet Sequence Diagram](images/AddBulletSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Edit Record (`edit`)
 
 Source: `docs/diagrams/EditRecordSequenceDiagram.puml`
 
 ![Edit Record Sequence Diagram](images/EditRecordSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Edit Bullet (`editbullet`)
 
 Source: `docs/diagrams/EditBulletSequenceDiagram.puml`
 
 ![Edit Bullet Sequence Diagram](images/EditBulletSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Move Bullet (`movebullet`)
 
 Source: `docs/diagrams/MoveBulletSequenceDiagram.puml`
 
 ![Move Bullet Sequence Diagram](images/MoveBulletSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Delete Record (`delete`)
 
 Source: `docs/diagrams/DeleteRecordSequenceDiagram.puml`
 
 ![Delete Record Sequence Diagram](images/DeleteRecordSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Delete Bullet (`deletebullet`)
 
 Source: `docs/diagrams/DeleteBulletSequenceDiagram.puml`
 
 ![Delete Bullet Sequence Diagram](images/DeleteBulletSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### List (`list`)
 
 Source: `docs/diagrams/ListSequenceDiagram.puml`
 
 ![List Sequence Diagram](images/ListSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Show (`show`)
 
 Source: `docs/diagrams/ShowSequenceDiagram.puml`
 
 ![Show Sequence Diagram](images/ShowSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Find (`find`)
 
 Source: `docs/diagrams/FindSequenceDiagram.puml`
 
 ![Find Sequence Diagram](images/FindSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Find Bullet (`findbullet`)
 
 Source: `docs/diagrams/FindBulletSequenceDiagram.puml`
 
 ![FindBullet Sequence Diagram](images/FindBulletSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Sort (`sort`)
 
 Source: `docs/diagrams/SortSequenceDiagram.puml`
 
 ![Sort Sequence Diagram](images/SortSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Generate (`generate`)
 
 Source: `docs/diagrams/GenerateSequenceDiagram.puml`
 
 ![Generate Sequence Diagram](images/GenerateSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Edit User (`edituser`)
 
 Source: `docs/diagrams/EditUserSequenceDiagram.puml`
 
 ![EditUser Sequence Diagram](images/EditUserSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ### Exit (`bye`)
 
 Source: `docs/diagrams/ExitSequenceDiagram.puml`
 
 ![Exit Sequence Diagram](images/ExitSequenceDiagram.png)
-<div style="page-break-after: always;"></div>
 
 ## Product Scope
 
@@ -399,6 +373,13 @@ ResuMake provides structured resume-content management in a lightweight CLI:
 | v1.0 | student job applicant | list all my saved projects | quickly review what I already have for applications |
 | v1.0 | student job applicant | view one record with all bullets | check whether the information is complete and accurate |
 | v1.0 | internship applicant | find records by keyword | quickly surface relevant entries for a specific role |
+| v2.0 | internship applicant | filter projects by tag | choose the most relevant projects for a specific internship |
+| v2.0 | internship applicant | export a project's bullet points | paste them directly into my resume or application form |
+| v2.0 | fresh graduate | add start and end dates to a project (accept specific date format) | show a clear timeline of my work |
+| v2.0 | career switcher | duplicate an existing project | create tailored versions for different job types |
+| v2.0 | career switcher | sort projects by date | review my experience in a meaningful order |
+| v2.0 | fresh graduate | edit each aspect of a project | change projects to be better suited for job applications |
+| v2.0 | student job applicant | generate tags | include skills or industry tags that a project is related to |
 | v1.0 | fresh graduate | delete outdated or weak bullet points | keep only the most relevant content |
 | v1.0 | fresh graduate | load saved data when the app starts | continue working without re-entering everything |
 | v1.0 | user with many records | sort records by title | scan my content more quickly |
