@@ -399,6 +399,21 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_projectMissingFromValue_throwsFromDateFormatMessage() {
+        ResumakeException exception = assertThrows(ResumakeException.class, () -> Parser.parse(
+                "project Test /role Dev /tech Java /from /to 2025-12"));
+        assertEquals("from date must be in yyyy-MM format", exception.getMessage());
+    }
+
+    @Test
+    public void parse_projectUnknownField_throwsInvalidFieldMessage() {
+        ResumakeException exception = assertThrows(ResumakeException.class, () -> Parser.parse(
+                "project MyApp /role Dev /tech Java /from 2026-01 /to 2026-02 /salary 5000"));
+        assertEquals("Error: \"/salary\" is not a valid field. Please use /role, /tech, /from, and /to only.",
+                exception.getMessage());
+    }
+
+    @Test
     public void parse_editbulletBlankNewBullet_returnsEditBulletCommand() throws ResumakeException {
         Command command = Parser.parse("editbullet 1 1 /   ");
         assertInstanceOf(EditBulletCommand.class, command);

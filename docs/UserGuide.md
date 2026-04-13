@@ -12,6 +12,20 @@ ResuMake runs in the terminal and stores data in `records.txt`.
 
 ---
 
+## Target User Profile
+
+ResuMake is intended for users who frequently maintain resume content, especially:
+- Students preparing internship or full-time job applications.
+- Early-career job seekers tracking projects, experiences, and CCAs.
+- Users who prefer keyboard-driven workflows over form-based apps.
+
+Assumed user skill level:
+- Comfortable with basic command-line usage (opening a terminal and running commands).
+- Able to follow structured command formats and index-based operations.
+- No programming background is required beyond basic CLI familiarity.
+
+---
+
 ## Quick Start
 
 1. Ensure you have Java 17 installed.
