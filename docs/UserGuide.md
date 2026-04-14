@@ -47,7 +47,7 @@ Assumed user skill level:
 1. Ensure you have Java 17 installed.
 2. Place the jar file in a folder.
 3. Navigate to that folder in the terminal and run `java -jar ResuMake.jar`.
-4. On startup, ResuMake first prints `Welcome to ResuMake`, then prints `Loaded records from file.`.
+4. On startup, ResuMake prints `Welcome to ResuMake`.
 5. If user details are not loaded from file, it will prompt:
    - `Welcome! What is your name?`
    - `Next, what is your number?`
@@ -286,6 +286,7 @@ show 1
 
 Expected output (example):
 ```text
+--------------------
 Showing record 1
 [P] Capo CLI | role: Developer | tech: Java | from: 2026-01 | to: 2026-03
   Bullets:
@@ -326,6 +327,8 @@ Matching records:
 
 Finds bullet points containing the keyword across all records.
 For each matching record, only matching bullets are shown.
+Displayed record indices follow full-list positions (same style as `list`),
+and displayed bullet indices are the bullets' original indices within each record.
 
 Format:
 `findbullet KEYWORD`
@@ -417,7 +420,9 @@ editbullet 1 2 / Improved performance by optimizing algorithms
 
 Expected output:
 ```text
+--------------------
 Edited bullet 2 in record 1
+--------------------
 ```
 
 ---
@@ -493,6 +498,12 @@ Moves a bullet from one position to another in the same record.
 Format:
 `movebullet RECORD_INDEX FROM_BULLET_INDEX TO_BULLET_INDEX`
 
+Notes:
+- All indices are 1-based.
+- If `FROM_BULLET_INDEX` and `TO_BULLET_INDEX` are the same, no changes are made and a no-op message is shown.
+- If the record index is invalid, an `Invalid record index.` error is shown.
+- If the record exists but either bullet index is invalid, an `Invalid bullet index.` error is shown.
+
 Example:
 ```text
 movebullet 1 3 1
@@ -502,6 +513,16 @@ Expected output:
 ```text
 --------------------
 Bullet 3 moved to position 1 in record 1.
+--------------------
+```
+
+Example — same source and target index:
+```text
+movebullet 1 2 2
+```
+```text
+--------------------
+No changes made: bullet is already at position 2 in record 1.
 --------------------
 ```
 
@@ -565,6 +586,13 @@ Expected output:
 ```text
 --------------------
 Records sorted alphabetically by title.
+--------------------
+```
+
+If there are no records:
+```text
+--------------------
+No records to sort.
 --------------------
 ```
 

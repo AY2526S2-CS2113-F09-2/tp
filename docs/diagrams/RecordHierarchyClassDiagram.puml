@@ -33,7 +33,6 @@ class Cca {
 }
 
 class RecordList {
-  -list: ArrayList<Record>
   +add(record: Record): void
   +getRecord(index: int): Record
 }

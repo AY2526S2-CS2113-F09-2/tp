@@ -5,9 +5,6 @@ skinparam classAttributeIconSize 0
 title Architecture Class Diagram
 
 class Resumake {
-  -list: RecordList
-  -ui: Ui
-  -storage: Storage
   +run(): void
   +main(args: String[]): void
 }
@@ -30,7 +27,6 @@ class Storage {
 }
 
 class RecordList {
-  -list: ArrayList<Record>
   -size: int
   +add(record: Record): void
   +getRecord(index: int): Record

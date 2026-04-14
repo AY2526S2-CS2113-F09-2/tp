@@ -12,6 +12,7 @@ participant RecordList
 participant Storage
 
 User -> Ui: input command line
+Resumake -> Ui: showPrompt() [interactive console]
 Ui -> Resumake: readCommand()
 Resumake -> Parser: parse(input, ui)
 Parser --> Resumake: concrete Command

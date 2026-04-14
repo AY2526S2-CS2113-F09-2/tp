@@ -6,9 +6,6 @@ title Full System Class Diagram
 
 package "seedu.duke" {
   class Resumake {
-    -list: RecordList
-    -ui: Ui
-    -storage: Storage
     +run(): void
     +main(args: String[]): void
   }
@@ -37,7 +34,6 @@ package "seedu.duke" {
   }
 
   class RecordList {
-    -list: ArrayList<Record>
     -size: int
     +add(record: Record): void
     +getRecord(index: int): Record
@@ -56,7 +52,7 @@ package "seedu.duke" {
   }
 
   class User {
-    -instance: User
+    -{static} instance: User
     -name: String
     -number: int
     -email: String
@@ -79,21 +75,87 @@ package "seedu.duke.commands" {
     +isExit(): boolean
   }
 
-  class AddCommand
-  class AddBulletCommand
-  class DeleteCommand
-  class EditCommand
-  class EditBulletCommand
-  class EditUserCommand
-  class ExitCommand
-  class FindCommand
-  class FindBulletCommand
-  class GenerateCommand
-  class HelpCommand
-  class ListCommand
-  class MoveBulletCommand
-  class ShowCommand
-  class SortCommand
+  class AddCommand {
+    -r: Record
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class AddBulletCommand {
+    -index: int
+    -bullet: String
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class DeleteCommand {
+    -userRecordIndex: int
+    -userBulletIndex: int
+    -isDeleteBulletMode: boolean
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class EditCommand {
+    -index: int
+    -newTitle: String
+    -newRole: String
+    -newTech: String
+    +execute(list: RecordList): void
+  }
+  class EditBulletCommand {
+    -userRecordIndex: int
+    -userBulletIndex: int
+    -newBullet: String
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class EditUserCommand {
+    -field: String
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class ExitCommand {
+    -ui: Ui
+    +execute(list: RecordList): void
+    +isExit(): boolean
+  }
+  class FindCommand {
+    -keyword: String
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class FindBulletCommand {
+    -keyword: String
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class GenerateCommand {
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class HelpCommand {
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class ListCommand {
+    -type: String
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class MoveBulletCommand {
+    -recordIndex: int
+    -fromBulletIndex: int
+    -toBulletIndex: int
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class ShowCommand {
+    -index: int
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
+  class SortCommand {
+    -ui: Ui
+    +execute(list: RecordList): void
+  }
 
   Command <|-- AddCommand
   Command <|-- AddBulletCommand
@@ -123,9 +185,15 @@ package "seedu.duke.recordtype" {
     #bullets: ArrayList<String>
   }
 
-  class Project
-  class Experience
-  class Cca
+  class Project {
+    +Project(title: String, role: String, tech: String, from: YearMonth, to: YearMonth)
+  }
+  class Experience {
+    +Experience(title: String, role: String, tech: String, from: YearMonth, to: YearMonth)
+  }
+  class Cca {
+    +Cca(title: String, role: String, tech: String, from: YearMonth, to: YearMonth)
+  }
 
   Record <|-- Project
   Record <|-- Experience
@@ -133,7 +201,9 @@ package "seedu.duke.recordtype" {
 }
 
 package "seedu.duke.exceptions" {
-  class ResumakeException
+  class ResumakeException {
+    +ResumakeException(message: String)
+  }
 }
 
 Resumake *-- Ui

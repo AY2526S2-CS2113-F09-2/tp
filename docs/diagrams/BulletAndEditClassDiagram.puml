@@ -1,6 +1,7 @@
 @startuml
 !pragma layout smetana
 skinparam classAttributeIconSize 0
+left to right direction
 
 title Bullet and Edit Feature Class Diagram
 
@@ -60,19 +61,15 @@ class Record {
   +deleteBullet(bulletIndex: int): String
 }
 
-class ResumakeException
+class ResumakeException {
+  +ResumakeException(message: String)
+}
 
 Command <|-- AddBulletCommand
 Command <|-- EditBulletCommand
 Command <|-- MoveBulletCommand
 Command <|-- EditCommand
 Command <|-- DeleteCommand
-
-AddBulletCommand ..> RecordList
-EditBulletCommand ..> RecordList
-MoveBulletCommand ..> RecordList
-EditCommand ..> RecordList
-DeleteCommand ..> RecordList
 
 AddBulletCommand ..> Record
 EditBulletCommand ..> Record

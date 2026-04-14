@@ -17,8 +17,12 @@ Resumake -> Parser: parse(input, ui)
 Parser --> Resumake: MoveBulletCommand
 Resumake -> MoveBulletCommand: execute(list)
 MoveBulletCommand -> RecordList: getRecord(recordIndex)
-MoveBulletCommand -> Record: moveBullet(fromIndex, toIndex)
-MoveBulletCommand -> Ui: show move status
+alt fromIndex == toIndex
+  MoveBulletCommand -> Ui: show no-op message
+else valid move
+  MoveBulletCommand -> Record: moveBullet(fromIndex, toIndex)
+  MoveBulletCommand -> Ui: show move status
+end
 Resumake -> Storage: saveToFile(list)
 Storage -> Storage: serialize + compare + write if changed
 @enduml
