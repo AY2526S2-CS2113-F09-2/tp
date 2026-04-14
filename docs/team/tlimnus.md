@@ -2,7 +2,7 @@
 
 ## Overview
 
-**ResuMake CLI** is a Java command-line application that helps users manage resume content such as projects, experiences, CCAs, and bullet points. Users interact with the application through text commands, which are parsed into command objects and executed against the resume record list. My contributions centred on the record-viewing and user-profile side of the app — list, show, sort, generate, and edituser — as well as the underlying `User` singleton and skill-tracking system.
+**ResuMake CLI** is a Java command-line app for managing resume content such as projects, experiences, CCAs, and bullet points through text commands. My contributions focused on record viewing and user-profile features like list, show, sort, generate, and edituser, plus the `User` singleton and skill tracking.
 
 Given below are my contributions to the project.
 
@@ -16,11 +16,11 @@ Given below are my contributions to the project.
 
 ### Enhancements Implemented
 
-1. **List records with optional type filter (`list`)** — Displays all records or filters by `E`, `C`, or `P`. Records are shown with their actual list-position index rather than a re-numbered sequence, so the index is always consistent with what `show`, `edit`, and `delete` expect. Accepts the filter case-insensitively and validates it with a clear error if an unsupported value is given.
+1. **List records with optional type filter (`list`)** — Displays all records or filters by `E`, `C`, or `P`. Records are shown with their actual list-position index, so the index is always consistent with what `show`, `edit`, and `delete` expect.
 
 2. **Show individual record (`show`)** — Displays a single record by 1-based index together with all its bullet points (or a fallback `(no bullets)` message if there are none). Validates bounds before access, converts user-facing indices to internal 0-based indices in the constructor, and exposes `showRecordWithBullets()` as a static utility so `GenerateCommand` can reuse the same display logic without duplication.
 
-3. **Generate resume (`generate`)** — Produces a structured resume-style output: personal details first, then records grouped by type (CCA / Experience / Project) with bullets, then an auto-derived skills section. Reuses `ShowCommand.showRecordWithBullets()` and aggregates skills from the `User` singleton, keeping generation logic thin and modular.
+3. **Generate resume (`generate`)** — Generates a resume-style output with personal details first, followed by records grouped by type with their bullet points, and an auto-generated skills section at the end.
 
 4. **Sort records (`sort`)** — Sorts all stored records alphabetically by title using a case-insensitive comparator applied directly at the `RecordList` level. All subsequent `list` and `generate` output immediately reflects the new order.
 
