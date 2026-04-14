@@ -18,7 +18,7 @@ Given below are my contributions to the project.
 
 1. **List records with optional type filter (`list`)** — Displays all records or filters by `E`, `C`, or `P`. Records are shown with their actual list-position index, so the index is always consistent with what `show`, `edit`, and `delete` expect.
 
-2. **Show individual record (`show`)** — Displays a single record by 1-based index together with all its bullet points (or a fallback `(no bullets)` message if there are none). Validates bounds before access, converts user-facing indices to internal 0-based indices in the constructor, and exposes `showRecordWithBullets()` as a static utility so `GenerateCommand` can reuse the same display logic without duplication.
+2. **Show individual record (`show`)** — Displays a single record by index together with all its bullet points.
 
 3. **Generate resume (`generate`)** — Generates a resume-style output with personal details first, followed by records grouped by type with their bullet points, and an auto-generated skills section at the end.
 
@@ -26,7 +26,7 @@ Given below are my contributions to the project.
 
 5. **Edit user profile (`edituser`)** — Lets users update name, phone number, or email one field at a time. Shows the current value before prompting so the user knows what they are replacing.
 
-6. **User singleton and reference-counted skill tracking (`User`)** — Maintains the user's personal details as a singleton accessible from anywhere without being threaded through every command. Tech skills are reference-counted via `addSkills()` / `removeSkills()`: a skill is only removed once no record references it. Skill strings are normalised by stripping surrounding quotation marks before storage.
+6. **User singleton and reference-counted skill tracking (`User`)** — Maintains the user's personal details as a singleton accessible from anywhere without being threaded through every command. Tech skills are reference-counted via `addSkills()` / `removeSkills()`: a skill is only removed once no record references it.
 
 7. **Standardised error messages** — Unified invalid-index error text across `DeleteCommand`, `EditBulletCommand`, `MoveBulletCommand`, `EditCommand`, `AddBulletCommand`, and `ShowCommand`.
 
