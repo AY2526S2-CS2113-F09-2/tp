@@ -18,7 +18,7 @@ Parser --> Resumake: FindBulletCommand
 Resumake -> FindBulletCommand: execute(list)
 loop for each record
   FindBulletCommand -> Record: getBullets()
-  FindBulletCommand -> Ui: print matching bullets (if any)
+  FindBulletCommand -> Ui: print matching bullets with original bullet indices (if any)
 end
 Resumake -> Storage: saveToFile(list)
 Storage -> Storage: serialize + compare + skip if unchanged

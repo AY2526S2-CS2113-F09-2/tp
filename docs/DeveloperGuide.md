@@ -49,12 +49,12 @@ Bullets are managed inside `Record`, while `RecordList` provides collection-leve
 This feature area includes:
 
 - `Parser` creating `DeleteCommand` for `delete` and `deletebullet`.
-- `DeleteCommand` mutating `RecordList` (record deletion) or `Record` (bullet deletion).
+- `DeleteCommand` mutating `RecordList` through record removal and record-level bullet operations.
 - `Storage` handling persistence via `saveToFile` and `loadFromFile`.
 
 ### Command Hierarchy Class Diagram
 
-![Command Hierarchy Class Diagram](images/CommandHierarchyClassDiagram.png)
+![Command Hierarchy Class Diagram](images/CommandHierarchyDetailedClassDiagram.png)
 
 This diagram shows all concrete command classes that extend the `Command` base class.
 It summarizes the command-oriented architecture used by `Parser`.
@@ -78,7 +78,7 @@ It also shows how these commands interact with `RecordList`, `Record`, and `Resu
 ![User and Exception Class Diagram](images/UserAndExceptionClassDiagram.png)
 
 This diagram focuses on user profile and exception interactions across `User`,
-`EditUserCommand`, `GenerateCommand`, `Storage`, and `Resumake`.
+`EditUserCommand`, `GenerateCommand`, `Storage`, and `Ui`.
 
 ### Diagram Sources
 
@@ -88,9 +88,13 @@ Class diagram sources:
 - `docs/diagrams/FullSystemClassDiagram.puml` (all production classes)
 - `docs/diagrams/RecordHierarchyClassDiagram.puml`
 - `docs/diagrams/DeleteStorageClassDiagram.puml`
-- `docs/diagrams/CommandHierarchyClassDiagram.puml`
+- `docs/diagrams/CommandHierarchyDetailedClassDiagram.puml`
 - `docs/diagrams/BulletAndEditClassDiagram.puml`
 - `docs/diagrams/UserAndExceptionClassDiagram.puml`
+
+Object diagram source:
+
+- `docs/diagrams/RuntimeObjectDiagram.puml`
 
 ### Full System Class Diagram
 
@@ -99,6 +103,13 @@ For complete class-level coverage across all classes in `src/main/java`, use:
 - `docs/diagrams/FullSystemClassDiagram.puml`
 
 ![Full System Class Diagram](images/FullSystemClassDiagram.png)
+
+### Runtime Object Diagram
+
+This object diagram shows a concrete runtime snapshot with a `Resumake` instance,
+its connected `Ui`/`Storage`/`RecordList`, a singleton `User`, and sample records.
+
+![Runtime Object Diagram](images/RuntimeObjectDiagram.png)
 
 ## Implementation Details
 
@@ -152,6 +163,8 @@ The bullet-editing flow is split into focused commands:
 - `AddBulletCommand`: Adds a non-empty, non-duplicate bullet.
 - `EditBulletCommand`: Replaces bullet text at a valid index.
 - `MoveBulletCommand`: Reorders bullets within the same record.
+  If source and target indices are identical, it exits as a no-op with an explicit message.
+  It also distinguishes invalid record index vs invalid bullet index in user-facing errors.
 
 Validation is enforced in both command and `Record` layers to keep data consistent.
 
@@ -180,6 +193,9 @@ Read-style commands are implemented as:
 
 These commands do not mutate `RecordList`; storage now compares serialized state and skips file writes if unchanged.
 
+`FindBulletCommand` preserves original record and bullet indices in output:
+record numbering follows full-list positions, and matching bullets are printed with their original bullet indices inside each record.
+
 #### ListCommand — consistent index design
 
 `ListCommand` iterates over the full `RecordList` and increments a shared counter for every record regardless of type.
@@ -201,7 +217,7 @@ Type validation is performed at the start of `execute()`. An invalid type throws
 
 #### GenerateCommand — skill tracking integration
 
-Skills are not entered by the user directly. They are accumulated automatically via `User.addSkills(String)` whenever a record's tech field is processed (called from `GenerateCommand.execute()`).
+Skills are not entered by the user directly. They are accumulated automatically through `RecordList.add(...)` / `RecordList.removeIndex(...)`, which call `User.addSkills(String)` and `User.removeSkills(String)` based on each record's `tech` field.
 `User` stores skills in a `HashMap<String, Integer>` where the value is a reference count.
 Adding a skill increments the count; removing one decrements it and drops the entry when the count reaches zero.
 `getSkillsAsString()` returns all keys as a comma-separated string, which `GenerateCommand` prints under the `Skills` heading.

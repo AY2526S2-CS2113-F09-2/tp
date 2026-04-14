@@ -1,0 +1,44 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam classAttributeIconSize 0
+
+title Runtime Object Diagram (Example Snapshot)
+
+object "resumake: Resumake" as resumake {
+  isExit = false
+}
+
+object "ui: Ui" as ui
+object "storage: Storage" as storage {
+  filepath = \"records.txt\"
+}
+object "list: RecordList" as list {
+  size = 2
+}
+object "user: User" as user {
+  name = \"Alex Tan\"
+  number = 91234567
+  email = \"alex@example.com\"
+}
+
+object "p1: Project" as p1 {
+  title = \"Capo CLI\"
+  role = \"Developer\"
+  tech = \"Java\"
+}
+
+object "e1: Experience" as e1 {
+  title = \"Google\"
+  role = \"SWE Intern\"
+  tech = \"Python\"
+}
+
+resumake -- ui : uses
+resumake -- storage : persists via
+resumake -- list : manages
+storage ..> user : load/save profile
+list o-- p1
+list o-- e1
+
+@enduml
