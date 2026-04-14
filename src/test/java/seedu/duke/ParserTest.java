@@ -452,6 +452,42 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_projectTitleContainingStandaloneSlashToken_parsesCorrectly() throws Exception {
+        provideInput("n");
+        Command command = Parser.parse(
+                "project Resume /Builder /role Developer /tech Java /from 2026-01 /to 2026-03");
+        assertInstanceOf(AddCommand.class, command);
+
+        RecordList list = new RecordList();
+        command.execute(list);
+
+        Record record = list.getRecord(0);
+        assertEquals("Resume /Builder", record.getTitle());
+        assertEquals("Developer", record.getRole());
+    }
+
+    @Test
+    public void parse_editTitleContainingStandaloneSlashToken_parsesCorrectly() throws Exception {
+        Command command = Parser.parse("edit 1 Resume /Builder /role Team Lead");
+        assertInstanceOf(EditCommand.class, command);
+
+        RecordList list = new RecordList();
+        Record record = new Record(
+                "Old Title",
+                "Developer",
+                "Java",
+                YearMonth.parse("2026-01"),
+                YearMonth.parse("2026-03"));
+        list.add(record);
+
+        command.execute(list);
+
+        assertEquals("Resume /Builder", record.getTitle());
+        assertEquals("Team Lead", record.getRole());
+        assertEquals("Java", record.getTech());
+    }
+
+    @Test
     public void parse_projectDuplicateField_throwsException() {
         ResumakeException exception = assertThrows(ResumakeException.class, () -> Parser.parse(
                 "project Demo /role First /role Second /tech Java /from 2026-01 /to 2026-03"));
