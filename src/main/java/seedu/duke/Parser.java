@@ -578,10 +578,9 @@ public class Parser {
         int toIndex = -1;
 
         Matcher matcher = FIELD_TOKEN_PATTERN.matcher(args);
-        boolean roleSeen = false;
-        boolean techSeen = false;
-        boolean fromSeen = false;
-        boolean toSeen = false;
+        String[] unknownTokens = new String[4];
+        int[] unknownTokenIndices = new int[4];
+        int unknownCount = 0;
 
         while (matcher.find()) {
             String fieldToken = matcher.group(1);
@@ -613,14 +612,44 @@ public class Parser {
                 toIndex = tokenIndex;
                 break;
             default:
+                if (unknownCount == unknownTokens.length) {
+                    String[] expandedTokens = new String[unknownCount * 2];
+                    int[] expandedIndices = new int[unknownCount * 2];
+                    System.arraycopy(unknownTokens, 0, expandedTokens, 0, unknownCount);
+                    System.arraycopy(unknownTokenIndices, 0, expandedIndices, 0, unknownCount);
+                    unknownTokens = expandedTokens;
+                    unknownTokenIndices = expandedIndices;
+                }
+                unknownTokens[unknownCount] = fieldToken;
+                unknownTokenIndices[unknownCount] = tokenIndex;
+                unknownCount++;
+            }
+        }
+
+        int firstKnownFieldIndex = args.length();
+        if (roleIndex != -1 && roleIndex < firstKnownFieldIndex) {
+            firstKnownFieldIndex = roleIndex;
+        }
+        if (techIndex != -1 && techIndex < firstKnownFieldIndex) {
+            firstKnownFieldIndex = techIndex;
+        }
+        if (fromIndex != -1 && fromIndex < firstKnownFieldIndex) {
+            firstKnownFieldIndex = fromIndex;
+        }
+        if (toIndex != -1 && toIndex < firstKnownFieldIndex) {
+            firstKnownFieldIndex = toIndex;
+        }
+
+        for (int i = 0; i < unknownCount; i++) {
+            if (unknownTokenIndices[i] >= firstKnownFieldIndex) {
                 if (isEditCommand) {
-                    throw new ResumakeException("\"" + fieldToken
+                    throw new ResumakeException("\"" + unknownTokens[i]
                             + "\" is not a valid field. Please use the following format "
                             + "\"edit RECORD_INDEX [NEW_TITLE] [/role NEW_ROLE] [/tech NEW_TECH] "
                             + "[/from YYYY-MM] [/to YYYY-MM]\".");
                 }
                 throw new ResumakeException(
-                        "\"" + fieldToken + "\" is not a valid field. "
+                        "\"" + unknownTokens[i] + "\" is not a valid field. "
                                 + "Please use /role, /tech, /from, and /to only.");
             }
         }
