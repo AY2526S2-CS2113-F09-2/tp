@@ -16,7 +16,7 @@
  * <p>Validation ensures that:
  * <ul>
  *     <li>At least one field is provided for editing</li>
- *     <li>Date ranges remain valid (from ≤ to)</li>
+ *     <li>Date ranges remain valid (from <= to)</li>
  * </ul>
  * </p>
  */
